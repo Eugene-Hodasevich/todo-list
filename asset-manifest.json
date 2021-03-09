@@ -1,0 +1,20 @@
+{
+  "files": {
+    "main.css": "/Eugene-Hodasevich/todo-list/static/css/main.05ca9d35.chunk.css",
+    "main.js": "/Eugene-Hodasevich/todo-list/static/js/main.490c3cf9.chunk.js",
+    "main.js.map": "/Eugene-Hodasevich/todo-list/static/js/main.490c3cf9.chunk.js.map",
+    "runtime-main.js": "/Eugene-Hodasevich/todo-list/static/js/runtime-main.2c95f043.js",
+    "runtime-main.js.map": "/Eugene-Hodasevich/todo-list/static/js/runtime-main.2c95f043.js.map",
+    "static/js/2.feab4424.chunk.js": "/Eugene-Hodasevich/todo-list/static/js/2.feab4424.chunk.js",
+    "static/js/2.feab4424.chunk.js.map": "/Eugene-Hodasevich/todo-list/static/js/2.feab4424.chunk.js.map",
+    "index.html": "/Eugene-Hodasevich/todo-list/index.html",
+    "static/css/main.05ca9d35.chunk.css.map": "/Eugene-Hodasevich/todo-list/static/css/main.05ca9d35.chunk.css.map",
+    "static/js/2.feab4424.chunk.js.LICENSE.txt": "/Eugene-Hodasevich/todo-list/static/js/2.feab4424.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.2c95f043.js",
+    "static/js/2.feab4424.chunk.js",
+    "static/css/main.05ca9d35.chunk.css",
+    "static/js/main.490c3cf9.chunk.js"
+  ]
+}
