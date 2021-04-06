@@ -2,4 +2,4 @@
  
 https://eugene-hodasevich.github.io/todo-list/
 
-### There are some intersing features in my project, like setting timeout for task, changing it's name and switching between 2 themes.
+### There are some intersing features in my project, like setting deadline for task, changing it's name and switching between 2 themes.
