@@ -1,14 +1,12 @@
 import { useState } from "react";
 import { Modal, Button, DateTimePicker } from 'react-rainbow-components';
-import {
-    faCheck,
-} from '@fortawesome/free-solid-svg-icons';
+import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ContentEditable from "react-contenteditable";
 
 export function ModalWindow({ todoToEdit, modalIsOpened, onModalClose, acceptChangedTodo }) {
     const [todoToChange, setTodoToChange] = useState(todoToEdit)
-    const [newDeadline, setNewDeadline] = useState(null)
+    const [newDeadline, setNewDeadline] = useState(undefined)
 
     let datePickerTime = (new Date())
     datePickerTime.setMinutes((new Date()).getMinutes() + 10)
@@ -49,7 +47,7 @@ export function ModalWindow({ todoToEdit, modalIsOpened, onModalClose, acceptCha
             <div className='modal-bottom'>
                 <div className='date-picker'>
                     <DateTimePicker
-                        value={todoToEdit && todoToEdit.deadline ? new Date(todoToEdit.deadline) : newDeadline}
+                        value={todoToEdit?.deadline ? new Date(todoToEdit.deadline) : newDeadline}
                         onClick={() => setNewDeadline(datePickerTime)}
                         formatStyle="large"
                         locale="en-US"
@@ -59,6 +57,7 @@ export function ModalWindow({ todoToEdit, modalIsOpened, onModalClose, acceptCha
                         maxDate={maxDate}
                     />
                 </div>
+
                 <Button variant="neutral"
                     onClick={() => {
                         if (!todoToChange.task) {
@@ -67,13 +66,13 @@ export function ModalWindow({ todoToEdit, modalIsOpened, onModalClose, acceptCha
                         }
                         acceptChangedTodo(todoToChange)
                     }}
+
                     className="rainbow-m-around_medium"
                 >
                     Accept changings
                     <FontAwesomeIcon icon={faCheck} className="rainbow-m-left_medium" />
                 </Button>
             </div>
-
         </Modal>
     )
 }

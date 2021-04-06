@@ -5,17 +5,17 @@ import { TodoItems } from "./TodoItems";
 import { ModalWindow } from "./ModalWindow";
 
 export function TodoList() {
-    const [todo, setTodo] = useState([])
+    const [todos, setTodos] = useState([])
     const [modalIsOpened, setModalIsOpened] = useState(false)
     const [todoToEdit, setTodoToEdit] = useState()
 
     useEffect(() => {
-        setTodo(JSON.parse(localStorage.getItem('todo')))
+        setTodos(JSON.parse(localStorage.getItem('todo')))
     }, [])
 
     useEffect(() => {
-        localStorage.setItem('todo', JSON.stringify(todo))
-    }, [todo])
+        localStorage.setItem('todo', JSON.stringify(todos))
+    }, [todos])
 
     function editTask(todo) {
         setTodoToEdit(todo)
@@ -23,14 +23,16 @@ export function TodoList() {
     }
 
     function deleteTask(id) {
-        let arr = todo.filter(todo => {
+        let arr = todos.filter(todo => {
             return todo.id !== id
         })
-        setTodo(arr)
+        setTodos(arr)
     }
 
-    function markDone(id) {
-        setTodo(todo.map(todo => {
+    function markDone(id, e) {
+        e.currentTarget.blur()
+
+        setTodos(todos.map(todo => {
             if (todo.id === id) {
                 todo.deadline = ''
                 todo.status = !todo.status
@@ -42,30 +44,30 @@ export function TodoList() {
     function createTask(newTask) {
         if (newTask.task) {
             let maxId
-            if (todo.length) {
-                let idsArr = todo.map((todo) => todo.id)
+            if (todos.length) {
+                let idsArr = todos.map((todo) => todo.id)
                 maxId = Math.max(...idsArr)
             } else {
                 maxId = 1
             }
-            // newTask.deadline = ''
+
             newTask.id = maxId + 1
 
-            setTodo([...todo, { ...newTask, id: generateId() }])
+            setTodos([...todos, { ...newTask, id: generateId() }])
         }
     }
 
     function generateId() {
-        if (todo.length) {
-            let idsArr = todo.map((todo) => todo.id)
+        if (todos.length) {
+            let idsArr = todos.map((todo) => todo.id)
             return Math.max(...idsArr) + 1
         }
         return 1
     }
 
     function changeTodo(renewedTodo) {
-        let newTodoArray = todo.filter(todo => todo.id !== todoToEdit.id)
-        setTodo([...newTodoArray, renewedTodo])
+        let newTodoArray = todos.filter(todo => todo.id !== todoToEdit.id)
+        setTodos([...newTodoArray, renewedTodo])
         setModalIsOpened(false)
     }
 
@@ -75,7 +77,6 @@ export function TodoList() {
 
     return (
         <div className='todo-list'>
-
             <div className="rainbow-p-around_small">
                 <Card className='create-task-box'>
                     <h1>Task List</h1>
@@ -83,26 +84,25 @@ export function TodoList() {
             </div>
 
             <CreateTodo
-                todo={todo}
+                todo={todos}
                 submit={createTask}
             />
 
             <TodoItems
-                todo={todo}
+                todos={todos}
                 markDone={markDone}
                 editTask={editTask}
                 deleteTask={deleteTask}
                 action
             />
 
-            {modalIsOpened ?
+            {modalIsOpened &&
                 <ModalWindow
                     todoToEdit={todoToEdit}
                     modalIsOpened={modalIsOpened}
                     onModalClose={onModalClose}
                     acceptChangedTodo={changeTodo}
                 />
-                : null
             }
         </div>
     )

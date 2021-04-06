@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 
 import { TodoItem } from "./TodoItem";
 
-export function TodoItems({ todo, markDone, editTask, deleteTask }) {
+export function TodoItems({ todos, markDone, editTask, deleteTask }) {
     const [time, setTimes] = useState(Date.now())
 
     useEffect(() => {
@@ -10,13 +10,13 @@ export function TodoItems({ todo, markDone, editTask, deleteTask }) {
         if (time >= 0) {
             interval = setInterval(() => {
                 setTimes(Date.now())
-            }, 1000)
+            }, 30)
         }
         return () => clearInterval(interval)
     }, [])
 
     const sortedTodoArr = useCallback(() => {
-        let arr = [...todo]
+        let arr = [...todos]
 
         arr.sort((a, b) => {
             if (!a.deadline) {
@@ -31,7 +31,7 @@ export function TodoItems({ todo, markDone, editTask, deleteTask }) {
         let arrTodoInProcess = arr.filter((todo) => !todo.status ? todo : null)
 
         return [...arrTodoInProcess, ...arrTodoDone]
-    }, [todo])
+    }, [todos])
 
     function setTodoItems() {
         let num = 1

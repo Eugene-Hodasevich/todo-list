@@ -29,20 +29,26 @@ const themes = {
 };
 
 function App() {
-    const [theme, setTheme] = useState('dark')
-    const [value, setValue] = useState('true')
-    const [backgroundColor, setBackgroundColor] = useState('#212121')
+    let previousTheme = localStorage.getItem('theme')
+    const [theme, setTheme] = useState(previousTheme || 'dark')
+    const [value, setValue] = useState(true)
+    const [backgroundColor, setBackgroundColor] = useState(previousTheme === 'dark' ? '#212121' : 'white')
 
     function changeTheme() {
         if (theme === 'dark') {
             setTheme('light')
             setValue(false)
             setBackgroundColor('white')
+
+            localStorage.setItem('theme', 'light')
         } else {
             setTheme('dark')
             setValue(true)
             setBackgroundColor('#212121')
+
+            localStorage.setItem('theme', 'dark')
         }
+
     }
 
     return (
@@ -59,4 +65,3 @@ function App() {
 }
 
 export default App;
-

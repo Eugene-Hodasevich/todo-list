@@ -40,7 +40,7 @@ export function TodoItem({ todo, num, deleteTask, editTask, markDone, currentTim
         if (todo.status) {
             color.current = 'green'
             return
-        } else if (currentTime > todo.deadline && todo.deadline) {
+        } else if (todo.deadline && currentTime > todo.deadline) {
             color.current = 'red'
             return
         } else {
@@ -60,7 +60,7 @@ export function TodoItem({ todo, num, deleteTask, editTask, markDone, currentTim
     useEffect(() => {
         let taskProgression = ((1 - (Math.floor((todo.deadline - currentTime) / 1000) / (Math.floor(todo.deadline / 1000) - Math.floor(todo.startTime / 1000)))) * 100).toFixed()
         if (taskProgression <= 100) {
-            progression.current = taskProgression
+            progression.current = +taskProgression
         } else if (taskProgression > 100) {
             progression.current = 100
         } else if (taskProgression < 0) {
@@ -71,21 +71,24 @@ export function TodoItem({ todo, num, deleteTask, editTask, markDone, currentTim
     return (
         <>
             <div className="rainbow-m-around_medium">
-                <Card style={{ boxShadow: `0px 0px 7px ${color.current}` }}>
+                <Card style={{ boxShadow: `0px 0px 3px ${color.current}` }}>
                     <div className="rainbow-p-around_medium task-box-inner">
                         <span className='task-name'>
                             {!todo.status ? `${num}. ` : ''}
+                            
                             <span style={{ textDecoration: textDecoration }}>{text}</span>
                         </span>
+
                         <div className='task-buttons'>
                             <ButtonIcon
                                 variant="border-filled"
                                 disabled={todo.status}
-                                onClick={() => markDone(todo.id)}
+                                onClick={(e) => markDone(todo.id, e)}
                                 size="medium"
                                 tooltip="Mark Done"
                                 icon={<FontAwesomeIcon icon={faCheck} />}
                             />
+
                             <ButtonIcon
                                 variant="border-filled"
                                 disabled={todo.status}
@@ -94,9 +97,10 @@ export function TodoItem({ todo, num, deleteTask, editTask, markDone, currentTim
                                 tooltip="Edit"
                                 icon={<FontAwesomeIcon icon={faPencilAlt} />}
                             />
+
                             <ButtonIcon
                                 variant="border-filled"
-                                onClick={() => deleteTask(todo.id)}
+                                onClick={(e) => deleteTask(todo.id)}
                                 size="medium"
                                 tooltip="Delete"
                                 icon={<FontAwesomeIcon icon={faTrashAlt} />}
@@ -104,9 +108,8 @@ export function TodoItem({ todo, num, deleteTask, editTask, markDone, currentTim
                         </div>
                     </div>
 
-                    {todo.deadline && !todo.status ?
+                    {todo.deadline && !todo.status &&
                         <div className="rainbow-p-around_x-small">
-
                             <div className='line'></div>
 
                             <div className="rainbow-align-content_space-between rainbow-p-bottom_x-small">
@@ -119,11 +122,10 @@ export function TodoItem({ todo, num, deleteTask, editTask, markDone, currentTim
                                         {progression.current}% of time has past
                                     </strong>
                                 </span>
-
                             </div>
 
                             <ProgressBar value={progression.current} size='small' />
-                        </div> : null
+                        </div>
                     }
                 </Card>
             </div>
